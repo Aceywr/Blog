@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>sort</title>
+</head>
+<body>
+    <script>
+    (function() {
+        let sort = function() {}
+
+        //调试方法
+
+        let log = function(info) {
+            console.log(info)
+        }
+
+        sort.quick = function(a, l, r) {
+            if(l < r) {
+                let i = l, j = r, x = a[i]
+                while (i < j) {
+                    while (i < j && a[j] >= x) {
+                        j--
+                    }
+                    if(i < j) {
+                        a[i++] = a[j]
+                    }
+                    while (i < j && a[i] < x) {
+                        i++
+                    }
+                    if(i < j) {
+                        a[j--] = a[i]
+                    }
+                }
+                a[i] = x
+                sort.quick(a, l, i - 1)
+                sort.quick(a, i + 1, r)
+                if(l == 0 && r == a.length-1) {
+                    log(a)
+                }
+            }
+        }
+
+        sort.swap = function(arr, a, b) {
+            let temp = arr[a]
+            arr[a] = arr[b]
+            arr[b] = temp
+        }
+
+        sort.bubble = function(arr) {
+            for(let i = 0; i < arr.length; i++) {
+
+            }
+        }
+        
+        this.sort = sort
+    }.call(this))
+    let a = [2,3,1,10,22,123]
+    sort.quick(a, 0, 5)
+    sort.swap(a[0], a[5])
+    console.log(a)
+    </script>
+</body>
+</html>

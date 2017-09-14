@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>algorithm</title>
+</head>
+<body>
+    <script>
+        //算法题目练习
+
+        //2017.9.9
+        //合并排序，将两个已经排序的数组合并成一个数组，其中一个数组能容下两个数组的所有元素
+        function log(info) {
+            console.log(info)
+        }
+
+        let mergeSortedArr = function(a, b) {
+            let al = a.length
+            let bl = b.length
+            let len = al + bl
+            len--
+            al--
+            bl--
+            while(al >= 0 && bl >= 0) {
+                if(a[al] >= b[bl]) {
+                    a[len--] = a[al--]
+                }else{
+                    a[len--] = b[bl--]
+                }
+            }
+            while(bl >= 0) {
+                a[len--] = b[bl--]
+            }
+            log(a)
+        }
+
+        //不使用临时变量交换两个数
+        let swap = function(a, b) {
+            a = a ^ b
+            b = b ^ a
+            a = a ^ b
+
+            log(a+","+b)
+        }
+
+        // 2017.9.10
+        //Two Sum
+        //蛮力 Brute Force
+        let twoSum_Force = function(nums, target) {
+            for(let i = 0; i < nums.length; i++) {
+                for(let j = i + 1; j < nums.length; j++) {
+                    if(nums[j] == target - nums[i]) {
+                        return [i, j]
+                    }
+                }
+            }
+            return "no solution"
+        }
+        // two-pass hash table
+        let twoSum_Hash = function(nums, target) {
+            let entry = {}
+            for(let i = 0; i < nums.length; i++) {
+                entry[nums[i]] = i
+            }
+            for(let i = 0; i < nums.length; i++) {
+                let index = target - nums[i]
+                if(entry[index] !== undefined) {
+                    return [i, entry[index]]
+                }
+            }
+            return "no solution"
+        }
+        // one-pass hash table
+        let twoSum_oneHash = function(nums, target) {
+            let entry = {}
+            for(let i = 0; i < nums.length; i++) {
+                let index = target - nums[i]
+                if(entry[index] !== undefined) {
+                    return [i, entry[index]]
+                }
+                entry[nums[i]] = i 
+            }
+            return "no solution"
+        }
+
+        // Power of three
+
+        let isPst_loop = function(n) {
+            if(n < 1) {
+                return false
+            }
+            while(n % 3 == 0) {
+                n /= 3
+            }
+            return n == 1
+        }
+
+        let isPst_Str = function(n) {
+            var reg = new RegExp("^10*$")
+            return reg.test(n.toString(3))
+        }
+
+        let isPst_Math = function(n) {
+            return (Math.log(n) / Math.log(3)) % 1 == 0
+        } 
+        let isPst_Limit = function(n) {
+            return n > 0 && 1162261467 % n == 0
+        }
+
+        let numsCheck = function(arr) {
+            let i = 0,
+                nums = 1
+            while(i < arr.length-1) {
+                let temp = 1,
+                    j = i + 1
+                while(arr[i] == arr[j]) {
+                    j++
+                    temp++
+                }
+                if(nums < temp) {
+                    nums = temp
+                }
+                i++
+            }
+            return nums
+        }
+
+        let numsCheck2 = function(arr, a) {
+            for(let i = 0; i < arr.length; i++) {
+                if(arr[i] == a) {
+                    let j = i + 1,
+                        n = 1
+                    while (arr[i] == arr[j]) {
+                        n++
+                        j++
+                    }
+                    return n
+                }
+            }
+        }
+
+        // init
+        // let a = [1,3,5]
+        // let b = [2,4,6]
+        // mergeSortedArr(a, b)
+
+        let nums = [1, 2, 2, 3, 3, 3, 4]
+        let tar = 3
+        log(twoSum_oneHash(nums, tar))
+        log(isPst_loop(22))
+        log(isPst_Str(22))
+        log(isPst_Math(22))
+        log(isPst_Math(27))
+        log(numsCheck(nums))
+        log(numsCheck2(nums, 4))
+    </script>
+</body>
+</html>
